@@ -153,6 +153,17 @@ const App = () => {
             }]
         },
         {
+            label: "Most Used",
+            items: [
+                {label: "Daily Planner"},
+                {label: "Life Calendar"},
+                {label: "Pomodoro Timer"},
+                {label: "Personal Todo", icon: 'pi pi-fw pi-list'},
+                {label: "Kanban Board"},
+                {label: "Notes and Documents"}
+        ]
+        },
+        {
             label: 'UI Kit', icon: 'pi pi-fw pi-sitemap',
             items: [
                 {label: 'Form Layout', icon: 'pi pi-fw pi-id-card', to: '/formlayout'},
@@ -261,13 +272,16 @@ const App = () => {
 
     return (
         <div className={wrapperClass} onClick={onWrapperClick}>
-            <AppTopbar onToggleMenuClick={onToggleMenuClick} layoutColorMode={layoutColorMode}
-                       mobileTopbarMenuActive={mobileTopbarMenuActive} onMobileTopbarMenuClick={onMobileTopbarMenuClick} onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}/>
-
+            <AppTopbar 
+                onToggleMenuClick={onToggleMenuClick} 
+                layoutColorMode={layoutColorMode}
+                mobileTopbarMenuActive={mobileTopbarMenuActive} 
+                onMobileTopbarMenuClick={onMobileTopbarMenuClick} 
+                onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
+            />
             <div className="layout-sidebar" onClick={onSidebarClick}>
                 <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
             </div>
-
             <div className="layout-main-container">
                 <div className="layout-main">
                     <Route path="/" exact component={Dashboard}/>
@@ -291,13 +305,18 @@ const App = () => {
                     <Route path="/empty" component={EmptyPage}/>
                     <Route path="/documentation" component={Documentation}/>
                 </div>
-
                 <AppFooter layoutColorMode={layoutColorMode}/>
             </div>
-
-            <AppConfig rippleEffect={ripple} onRippleEffect={onRipple} inputStyle={inputStyle} onInputStyleChange={onInputStyleChange}
-                       layoutMode={layoutMode} onLayoutModeChange={onLayoutModeChange} layoutColorMode={layoutColorMode} onColorModeChange={onColorModeChange} />
-
+            <AppConfig 
+                rippleEffect={ripple} 
+                onRippleEffect={onRipple} 
+                inputStyle={inputStyle} 
+                onInputStyleChange={onInputStyleChange} 
+                layoutMode={layoutMode} 
+                onLayoutModeChange={onLayoutModeChange} 
+                layoutColorMode={layoutColorMode} 
+                onColorModeChange={onColorModeChange} 
+            />
             <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
                 <div className="layout-mask p-component-overlay"></div>
             </CSSTransition>
