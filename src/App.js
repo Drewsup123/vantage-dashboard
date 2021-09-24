@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import { Route } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 import { AppTopbar } from './AppTopbar';
 import { AppFooter } from './AppFooter';
@@ -29,6 +30,7 @@ import { InvalidStateDemo } from './components/InvalidStateDemo';
 import { Crud } from './pages/Crud';
 import { EmptyPage } from './pages/EmptyPage';
 import { TimelineDemo } from './pages/TimelineDemo';
+import Todo from './pages/Todo';
 
 import PrimeReact from 'primereact/api';
 
@@ -39,8 +41,9 @@ import 'prismjs/themes/prism-coy.css';
 import './layout/flags/flags.css';
 import './layout/layout.scss';
 import './App.scss';
+import LifeCalendar from './pages/LifeCalendar';
 
-const App = () => {
+const App = (props) => {
 
     const [layoutMode, setLayoutMode] = useState('static');
     const [layoutColorMode, setLayoutColorMode] = useState('light')
@@ -156,9 +159,9 @@ const App = () => {
             label: "Most Used",
             items: [
                 {label: "Daily Planner"},
-                {label: "Life Calendar"},
+                {label: "Life Calendar", to: "/life-calendar"},
                 {label: "Pomodoro Timer"},
-                {label: "Personal Todo", icon: 'pi pi-fw pi-list'},
+                {label: "Personal Todo", icon: 'pi pi-fw pi-list', to: "/todo"},
                 {label: "Kanban Board"},
                 {label: "Notes and Documents"}
         ]
@@ -281,6 +284,7 @@ const App = () => {
             />
             <div className="layout-sidebar" onClick={onSidebarClick}>
                 <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
+                <h1>{props.isAuthenticated.toString()}</h1>
             </div>
             <div className="layout-main-container">
                 <div className="layout-main">
@@ -304,6 +308,8 @@ const App = () => {
                     <Route path="/crud" component={Crud}/>
                     <Route path="/empty" component={EmptyPage}/>
                     <Route path="/documentation" component={Documentation}/>
+                    <Route path="/todo" component={Todo} /> 
+                    <Route path="/life-calendar" component={LifeCalendar} />
                 </div>
                 <AppFooter layoutColorMode={layoutColorMode}/>
             </div>
@@ -326,4 +332,8 @@ const App = () => {
 
 }
 
-export default App;
+const mapStateToProps = state => ({
+    isAuthenticated: state.User.isAuthenticated
+})
+
+export default connect(mapStateToProps)(App);
