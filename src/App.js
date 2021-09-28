@@ -313,7 +313,7 @@ const App = (props) => {
                     <Route path="/life-calendar" component={LifeCalendar} />
                     <Route path="/planner" component={Planner} />
                 </div>
-                <AppFooter layoutColorMode={layoutColorMode}/>
+                {/* <AppFooter layoutColorMode={layoutColorMode}/> */}
             </div>
             <AppConfig 
                 rippleEffect={ripple} 
