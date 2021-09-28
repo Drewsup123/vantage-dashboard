@@ -42,6 +42,7 @@ import './layout/flags/flags.css';
 import './layout/layout.scss';
 import './App.scss';
 import LifeCalendar from './pages/LifeCalendar';
+import Planner from './pages/Planner';
 
 const App = (props) => {
 
@@ -158,7 +159,7 @@ const App = (props) => {
         {
             label: "Most Used",
             items: [
-                {label: "Daily Planner"},
+                {label: "Daily Planner", to: "/planner"},
                 {label: "Life Calendar", to: "/life-calendar"},
                 {label: "Pomodoro Timer"},
                 {label: "Personal Todo", icon: 'pi pi-fw pi-list', to: "/todo"},
@@ -310,6 +311,7 @@ const App = (props) => {
                     <Route path="/documentation" component={Documentation}/>
                     <Route path="/todo" component={Todo} /> 
                     <Route path="/life-calendar" component={LifeCalendar} />
+                    <Route path="/planner" component={Planner} />
                 </div>
                 <AppFooter layoutColorMode={layoutColorMode}/>
             </div>
