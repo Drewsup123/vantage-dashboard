@@ -105,6 +105,7 @@ export const Planner = () => {
                     margin={[10, 10]}
                     autoSize={false}
                     // onResizeStop={this.handleResizeChange}
+                    // draggableHandle=".draggable-handle"
                 >
                     <div key="textarea" className="card">
                         <RichTextExample />

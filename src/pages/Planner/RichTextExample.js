@@ -9,6 +9,7 @@ import {
 } from 'slate'
 import { withHistory } from 'slate-history'
 import { Toolbar } from 'primereact/toolbar';
+import { Button } from 'primereact/button';
 
 const HOTKEYS = {
   'mod+b': 'bold',
@@ -38,7 +39,21 @@ const RichTextExample = () => {
         <BlockButton format="numbered-list" icon="format_list_numbered" />
         <BlockButton format="bulleted-list" icon="format_list_bulleted" /> */}
       {/* </Toolbar> */}
-      <Toolbar />
+      <Toolbar 
+        left={() => (
+            <React.Fragment>
+                <Button onClick={() => toggleBlock(editor, "bold")} label="Bold" />
+                <Button onClick={() => { toggleBlock(editor, "italic") }} format="italic" label="Italic" />
+                <Button onClick={() => { toggleBlock(editor, "underline") }} label="Underline" />
+                <Button onClick={() => { toggleBlock(editor, "code") }} label="Code" />
+                {/* <Button onClick={() => {toggleBlock(editor, format)}} format="heading-one" icon="looks_one" />
+                <Button onClick={() => { toggleBlock(editor, format) }} format="heading-two" icon="looks_two" />
+                <Button onClick={() => { toggleBlock(editor, format) }} format="block-quote" icon="format_quote" />
+                <Button onClick={() => { toggleBlock(editor, format) }} format="numbered-list" icon="format_list_numbered" />
+                <Button onClick={() => { toggleBlock(editor, format) }} format="bulleted-list" icon="format_list_bulleted" /> */}
+            </React.Fragment>
+        )}
+      />
       <Editable
         renderElement={renderElement}
         renderLeaf={renderLeaf}
