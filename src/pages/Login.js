@@ -2,9 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { login } from '../store/user/actions';
+import { useHistory } from 'react-router';
 
 const Login = (props) => {
     const { login } = props;
+    const history = useHistory();
+
     const loginWithGoogle = (e) => {
         e.preventDefault();
         const provider = new GoogleAuthProvider();
@@ -18,6 +21,7 @@ const Login = (props) => {
             const user = result.user;
             console.log(token, user);
             login(user);
+            history.push("/");
         }).catch((error) => {
             // Handle Errors here.
             const errorCode = error.code;

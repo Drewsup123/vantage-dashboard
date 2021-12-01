@@ -295,7 +295,7 @@ const App = (props) => {
                     onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
                 />
             }
-            <Route exact path="/" component={LandingPage} />
+            {!isAuthenticated && <Route exact path="/" component={LandingPage} />}
             <Route path="/login" component={Login} />
             {
                 isAuthenticated
