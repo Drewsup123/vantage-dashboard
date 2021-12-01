@@ -1,16 +1,21 @@
-import { LOGOUT } from "./actions";
+import { LOGIN, LOGOUT } from "./actions";
 
 const initialState = {
-    access_token : "",
-    userName : "",
-    userId : "",
-    isAuthenticated: false
+    accessToken : "",
+    username : "",
+    uid : "",
+    isAuthenticated: false,
+    email: "",
+    phoneNumber: "",
+    photoUrl: ""
 };
 
 export function userReducer(state = initialState, action){
     switch(action.type){
+        case LOGIN:
+            return { ...state, ...action.payload, isAuthenticated: true };
         case LOGOUT:
-            return {...state, isAuthenticated: false};
+            return initialState;
         default:
             return state;
     }

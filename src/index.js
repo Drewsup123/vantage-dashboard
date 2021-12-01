@@ -7,6 +7,7 @@ import { HashRouter } from 'react-router-dom'
 import ScrollToTop from './ScrollToTop';
 import { Provider } from 'react-redux';
 import store from './store/store';
+import Firebase from './Firebase'
 
 import { setChonkyDefaults } from 'chonky';
 import { ChonkyIconFA } from 'chonky-icon-fontawesome';
@@ -17,7 +18,7 @@ ReactDOM.render(
     <Provider store={store}>
         <HashRouter>
             <ScrollToTop>
-                <App></App>
+                <App />
             </ScrollToTop>
         </HashRouter>
     </Provider>,

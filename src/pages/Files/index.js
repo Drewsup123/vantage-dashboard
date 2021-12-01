@@ -2,6 +2,9 @@ import React from 'react';
 //? Chonky Imports
 import { FullFileBrowser } from 'chonky';
 import { ChonkyActions } from 'chonky';
+//? Firebase Imports
+import { collection, addDoc } from "firebase/firestore";
+import { db } from '../../Firebase';
 
 //? File Data type
 // id: string; // (Required) String that uniquely identifies the file
@@ -87,6 +90,7 @@ const Files = () => {
             }
         }
     ];
+
     const folderChain = [
         { id: 'xcv', name: 'Folder 1', isDir: true },
     ];
@@ -95,7 +99,14 @@ const Files = () => {
         ChonkyActions.UploadFiles,
         ChonkyActions.DeleteFiles,
         ChonkyActions.CreateFolder,
-        ChonkyActions.CopyFiles
+        ChonkyActions.CopyFiles,
+        ChonkyActions.ChangeSelection,
+        ChonkyActions.ClearSelection,
+        ChonkyActions.DownloadFiles,
+        ChonkyActions.EnableListView,
+        ChonkyActions.FocusSearchInput,
+        ChonkyActions.KeyboardClickFile,
+        ChonkyActions.MouseClickFile,
     ];
 
     const handleAction = (data) => {
@@ -104,21 +115,40 @@ const Files = () => {
         //console.log(ChonkyActions);
 
          if (data.id === ChonkyActions.OpenFiles.id) {
-           console.log("open files");
+            console.log("open files");
         } else if (data.id === ChonkyActions.DeleteFiles.id) {
             // Delete the files
             console.log("delete files");
         }
         else if (data.id === ChonkyActions.UploadFiles.id) {
-          console.log("upload files");
+            console.log("upload files");
         }
-
     };
+
+    const testFirebase = async (e) => {
+        e.preventDefault();
+        try{
+            const docRef = await addDoc(
+                collection(db, "users"),
+                {
+                    first: "testAdd",
+                    last: "TestAdding",
+                    number: 123,
+                    array: ["Hello", 12],
+                    object: { key1: 1, key2: "Hello" }
+                }
+            );
+            console.log("DocRef: ", docRef);
+        }catch(err){
+            console.log(err);
+        }
+    }
 
     return (
         <div className="grid">
             <div className="col-12">
                 <h1>Files</h1>
+                <button className="btn" onClick={testFirebase}>Test Firebase</button>
                 <FullFileBrowser 
                     files={files} 
                     fileActions={chonky_actions}

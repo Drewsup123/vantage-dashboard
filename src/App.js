@@ -31,6 +31,8 @@ import { Crud } from './pages/Crud';
 import { EmptyPage } from './pages/EmptyPage';
 import { TimelineDemo } from './pages/TimelineDemo';
 import Todo from './pages/Todo';
+import NotFound from './pages/NotFound';
+import Login from './pages/Login';
 
 import PrimeReact from 'primereact/api';
 
@@ -44,9 +46,10 @@ import './App.scss';
 import LifeCalendar from './pages/LifeCalendar';
 import Planner from './pages/Planner';
 import Files from './pages/Files';
+import LandingPage from './pages/LandingPage';
 
 const App = (props) => {
-
+    const { isAuthenticated } = props;
     const [layoutMode, setLayoutMode] = useState('static');
     const [layoutColorMode, setLayoutColorMode] = useState('light')
     const [inputStyle, setInputStyle] = useState('outlined');
@@ -91,11 +94,9 @@ const App = (props) => {
             setOverlayMenuActive(false);
             setMobileMenuActive(false);
         }
-
         if (!mobileTopbarMenuClick) {
             setMobileTopbarMenuActive(false);
         }
-
         mobileTopbarMenuClick = false;
         menuClick = false;
     }
@@ -128,16 +129,14 @@ const App = (props) => {
     }
 
     const onMobileTopbarMenuClick = (event) => {
-        mobileTopbarMenuClick = true;
-
-        setMobileTopbarMenuActive((prevState) => !prevState);
         event.preventDefault();
+        mobileTopbarMenuClick = true;
+        setMobileTopbarMenuActive((prevState) => !prevState);
     }
 
     const onMobileSubTopbarMenuClick = (event) => {
-        mobileTopbarMenuClick = true;
-
         event.preventDefault();
+        mobileTopbarMenuClick = true;
     }
 
     const onMenuItemClick = (event) => {
@@ -277,60 +276,81 @@ const App = (props) => {
 
     return (
         <div className={wrapperClass} onClick={onWrapperClick}>
-            <AppTopbar 
-                onToggleMenuClick={onToggleMenuClick} 
-                layoutColorMode={layoutColorMode}
-                mobileTopbarMenuActive={mobileTopbarMenuActive} 
-                onMobileTopbarMenuClick={onMobileTopbarMenuClick} 
-                onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
-            />
-            <div className="layout-sidebar" onClick={onSidebarClick}>
-                <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
-                <h1>{props.isAuthenticated.toString()}</h1>
-            </div>
-            <div className="layout-main-container">
-                <div className="layout-main">
-                    <Route path="/" exact component={Dashboard}/>
-                    <Route path="/formlayout" component={FormLayoutDemo}/>
-                    <Route path="/input" component={InputDemo}/>
-                    <Route path="/floatlabel" component={FloatLabelDemo}/>
-                    <Route path="/invalidstate" component={InvalidStateDemo}/>
-                    <Route path="/button" component={ButtonDemo}/>
-                    <Route path="/table" component={TableDemo}/>
-                    <Route path="/list" component={ListDemo}/>
-                    <Route path="/tree" component={TreeDemo}/>
-                    <Route path="/panel" component={PanelDemo}/>
-                    <Route path="/overlay" component={OverlayDemo}/>
-                    <Route path="/menu" component={MenuDemo}/>
-                    <Route path="/messages" component={MessagesDemo}/>
-                    <Route path="/file" component={FileDemo}/>
-                    <Route path="/chart" component={ChartDemo}/>
-                    <Route path="/misc" component={MiscDemo}/>
-                    <Route path="/timeline" component={TimelineDemo}/>
-                    <Route path="/crud" component={Crud}/>
-                    <Route path="/empty" component={EmptyPage}/>
-                    <Route path="/documentation" component={Documentation}/>
-                    <Route path="/todo" component={Todo} /> 
-                    <Route path="/life-calendar" component={LifeCalendar} />
-                    <Route path="/planner" component={Planner} />
-                    <Route path="/files" component={Files} />
+            {
+                isAuthenticated
+                ?
+                <AppTopbar 
+                    onToggleMenuClick={onToggleMenuClick} 
+                    layoutColorMode={layoutColorMode}
+                    mobileTopbarMenuActive={mobileTopbarMenuActive} 
+                    onMobileTopbarMenuClick={onMobileTopbarMenuClick} 
+                    onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
+                />
+                :
+                <AppTopbar 
+                    onToggleMenuClick={onToggleMenuClick} 
+                    layoutColorMode={layoutColorMode}
+                    mobileTopbarMenuActive={mobileTopbarMenuActive} 
+                    onMobileTopbarMenuClick={onMobileTopbarMenuClick} 
+                    onMobileSubTopbarMenuClick={onMobileSubTopbarMenuClick}
+                />
+            }
+            <Route exact path="/" component={LandingPage} />
+            <Route path="/login" component={Login} />
+            {
+                isAuthenticated
+                ?
+                <>
+                <div className="layout-sidebar" onClick={onSidebarClick}>
+                    <AppMenu model={menu} onMenuItemClick={onMenuItemClick} layoutColorMode={layoutColorMode} />
+                    <h1>{props.isAuthenticated.toString()}</h1>
                 </div>
-                {/* <AppFooter layoutColorMode={layoutColorMode}/> */}
-            </div>
-            <AppConfig 
-                rippleEffect={ripple} 
-                onRippleEffect={onRipple} 
-                inputStyle={inputStyle} 
-                onInputStyleChange={onInputStyleChange} 
-                layoutMode={layoutMode} 
-                onLayoutModeChange={onLayoutModeChange} 
-                layoutColorMode={layoutColorMode} 
-                onColorModeChange={onColorModeChange} 
-            />
-            <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
-                <div className="layout-mask p-component-overlay"></div>
-            </CSSTransition>
-
+                <div className="layout-main-container">
+                    <div className="layout-main">
+                        <Route path="/" exact component={Dashboard}/>
+                        <Route path="/formlayout" component={FormLayoutDemo}/>
+                        <Route path="/input" component={InputDemo}/>
+                        <Route path="/floatlabel" component={FloatLabelDemo}/>
+                        <Route path="/invalidstate" component={InvalidStateDemo}/>
+                        <Route path="/button" component={ButtonDemo}/>
+                        <Route path="/table" component={TableDemo}/>
+                        <Route path="/list" component={ListDemo}/>
+                        <Route path="/tree" component={TreeDemo}/>
+                        <Route path="/panel" component={PanelDemo}/>
+                        <Route path="/overlay" component={OverlayDemo}/>
+                        <Route path="/menu" component={MenuDemo}/>
+                        <Route path="/messages" component={MessagesDemo}/>
+                        <Route path="/file" component={FileDemo}/>
+                        <Route path="/chart" component={ChartDemo}/>
+                        <Route path="/misc" component={MiscDemo}/>
+                        <Route path="/timeline" component={TimelineDemo}/>
+                        <Route path="/crud" component={Crud}/>
+                        <Route path="/empty" component={EmptyPage}/>
+                        <Route path="/documentation" component={Documentation}/>
+                        <Route path="/todo" component={Todo} /> 
+                        <Route path="/life-calendar" component={LifeCalendar} />
+                        <Route path="/planner" component={Planner} />
+                        <Route path="/files" component={Files} />
+                    </div>
+                    {/* <AppFooter layoutColorMode={layoutColorMode}/> */}
+                </div>
+                <AppConfig 
+                    rippleEffect={ripple} 
+                    onRippleEffect={onRipple} 
+                    inputStyle={inputStyle} 
+                    onInputStyleChange={onInputStyleChange} 
+                    layoutMode={layoutMode} 
+                    onLayoutModeChange={onLayoutModeChange} 
+                    layoutColorMode={layoutColorMode} 
+                    onColorModeChange={onColorModeChange} 
+                />
+                <CSSTransition classNames="layout-mask" timeout={{ enter: 200, exit: 200 }} in={mobileMenuActive} unmountOnExit>
+                    <div className="layout-mask p-component-overlay"></div>
+                </CSSTransition>
+                </>
+                : null
+            }
+            <Route compoent={NotFound} />
         </div>
     );
 
