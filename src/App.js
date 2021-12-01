@@ -43,6 +43,7 @@ import './layout/layout.scss';
 import './App.scss';
 import LifeCalendar from './pages/LifeCalendar';
 import Planner from './pages/Planner';
+import Files from './pages/Files';
 
 const App = (props) => {
 
@@ -164,7 +165,7 @@ const App = (props) => {
                 {label: "Pomodoro Timer"},
                 {label: "Personal Todo", icon: 'pi pi-fw pi-list', to: "/todo"},
                 {label: "Kanban Board"},
-                {label: "Notes and Documents"}
+                {label: "Files", to: "/files"}
         ]
         },
         {
@@ -312,6 +313,7 @@ const App = (props) => {
                     <Route path="/todo" component={Todo} /> 
                     <Route path="/life-calendar" component={LifeCalendar} />
                     <Route path="/planner" component={Planner} />
+                    <Route path="/files" component={Files} />
                 </div>
                 {/* <AppFooter layoutColorMode={layoutColorMode}/> */}
             </div>

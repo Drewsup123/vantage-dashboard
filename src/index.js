@@ -8,6 +8,11 @@ import ScrollToTop from './ScrollToTop';
 import { Provider } from 'react-redux';
 import store from './store/store';
 
+import { setChonkyDefaults } from 'chonky';
+import { ChonkyIconFA } from 'chonky-icon-fontawesome';
+// Somewhere in your `index.ts`:
+setChonkyDefaults({ iconComponent: ChonkyIconFA });
+
 ReactDOM.render(
     <Provider store={store}>
         <HashRouter>
