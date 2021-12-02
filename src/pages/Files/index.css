@@ -1,0 +1,11 @@
+.upload-file-dialog {
+    min-height: 30vh;
+    min-width: 25vw;
+}
+.iciELI {
+    height: 25vh !important;
+}
+.upload_file_drop_area {
+    height: 100%;
+    width: 100%
+}
