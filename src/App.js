@@ -48,8 +48,11 @@ import Planner from './pages/Planner';
 import Files from './pages/Files';
 import LandingPage from './pages/LandingPage';
 
+import { getAuth } from "firebase/auth";
+import { login } from './store/user/actions';
+
 const App = (props) => {
-    const { isAuthenticated } = props;
+    const { isAuthenticated, uid, login } = props;
     const [layoutMode, setLayoutMode] = useState('static');
     const [layoutColorMode, setLayoutColorMode] = useState('light')
     const [inputStyle, setInputStyle] = useState('outlined');
@@ -71,6 +74,18 @@ const App = (props) => {
             removeClass(document.body, "body-overflow-hidden");
         }
     }, [mobileMenuActive]);
+
+    useEffect(async () => {
+        const auth = await getAuth();
+        auth.onAuthStateChanged((user) => {
+            if(user){
+                console.log("User Found! : ", user);
+                login(user);
+            }else{
+                console.log("No User");
+            }
+        })
+    }, [])
 
     const onInputStyleChange = (inputStyle) => {
         setInputStyle(inputStyle);
@@ -357,7 +372,9 @@ const App = (props) => {
 }
 
 const mapStateToProps = state => ({
-    isAuthenticated: state.User.isAuthenticated
+    isAuthenticated: state.User.isAuthenticated,
+    accessToken: state.User.accessToken,
+    uid: state.User.uid
 })
 
-export default connect(mapStateToProps)(App);
+export default connect(mapStateToProps, { login })(App);

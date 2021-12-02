@@ -3,8 +3,10 @@ import React from 'react';
 import { FullFileBrowser } from 'chonky';
 import { ChonkyActions } from 'chonky';
 //? Firebase Imports
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc, setDoc, doc, getDoc } from "firebase/firestore";
 import { db } from '../../Firebase';
+//? Redux Imports
+import { connect } from 'react-redux';
 
 //? File Data type
 // id: string; // (Required) String that uniquely identifies the file
@@ -27,8 +29,8 @@ import { db } from '../../Firebase';
 // thumbnailUrl?: string; // Automatically load thumbnail from this URL
 // [property: string]: any; // Any other user-defined property
 
-const Files = () => {
-
+const Files = (props) => {
+    const { uid } = props;
     const files = [
         { id: 'lht', name: 'Projects', isDir: true, childrenCount: 1, color: 'blue' },
         null,
@@ -128,17 +130,22 @@ const Files = () => {
     const testFirebase = async (e) => {
         e.preventDefault();
         try{
-            const docRef = await addDoc(
-                collection(db, "users"),
-                {
-                    first: "testAdd",
-                    last: "TestAdding",
-                    number: 123,
-                    array: ["Hello", 12],
-                    object: { key1: 1, key2: "Hello" }
-                }
-            );
-            console.log("DocRef: ", docRef);
+            console.log(
+            db.collection("files")
+            // .collection(uid)
+            // .doc(uid)
+            )
+            // await setDoc(
+            //     doc(db, "files", uid),
+            //     [
+            //         {
+            //             name: "test"
+            //         }
+            //     ]
+            // )
+            // let DOC = await getDoc(doc(db, "files", uid));
+            // console.log("DOC: ", DOC);
+            // console.log("Doc Data: ", DOC.data());
         }catch(err){
             console.log(err);
         }
@@ -160,4 +167,8 @@ const Files = () => {
     );
 }
 
-export default Files;
+const mapStateToProps = (state) => ({
+    uid: state.User.uid
+})
+
+export default connect(mapStateToProps)(Files);

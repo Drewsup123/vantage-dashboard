@@ -7,7 +7,8 @@ const initialState = {
     isAuthenticated: false,
     email: "",
     phoneNumber: "",
-    photoUrl: ""
+    photoUrl: "",
+    files: []
 };
 
 export function userReducer(state = initialState, action){
